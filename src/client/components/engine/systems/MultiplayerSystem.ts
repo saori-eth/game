@@ -52,7 +52,6 @@ export class MultiplayerSystem {
             missingPlayers.forEach((player: any) => {
                 const playerEntity = new Player(player.id)
                 playerEntity.setPosition(player.position)
-                playerEntity.buildMesh(this.engine.scene)
                 this.engine.players.push(playerEntity)
             })
 
