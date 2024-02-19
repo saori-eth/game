@@ -1,0 +1,23 @@
+{
+    "name": "casino",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "build": "turbo build",
+        "start": "turbo start",
+        "dev": "turbo dev",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "prettier-format": "prettier --write .",
+        "prettier-check": "prettier --check ."
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "workspaces": [
+        "src/*"
+    ],
+    "devDependencies": {
+        "prettier": "^3.2.4"
+    }
+}

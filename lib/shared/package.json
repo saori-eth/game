@@ -1,0 +1,19 @@
+{
+    "name": "shared",
+    "version": "1.0.0",
+    "description": "",
+    "main": "dist/index.js",
+    "scripts": {
+        "build": "pnpm run env -- tsc",
+        "dev": "pnpm run env -- tsc -w",
+        "env": "dotenv -e ../../.env"
+    },
+    "devDependencies": {
+        "@types/node": "^20.8.7",
+        "dotenv-cli": "^7.3.0",
+        "typescript": "^5.2.2"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+}
