@@ -8,7 +8,7 @@ export class Player {
     }
 
     public setPosition(position: any): void {
-        // todo
+        this.position = position
     }
 
     public dispose(): void {
