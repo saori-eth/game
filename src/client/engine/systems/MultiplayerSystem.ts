@@ -41,7 +41,6 @@ export class MultiplayerSystem {
 
         const playerDifference =
             state.players.length - this.state.players.length
-        console.log('playerDifference', playerDifference)
 
         // case: adding player
         if (playerDifference > 0) {
