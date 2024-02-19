@@ -13,9 +13,15 @@ importers:
       '@types/node':
         specifier: ^20.8.7
         version: 20.10.6
+      '@types/three':
+        specifier: ^0.161.2
+        version: 0.161.2
       dotenv-cli:
         specifier: ^7.3.0
         version: 7.3.0
+      three:
+        specifier: ^0.161.0
+        version: 0.161.0
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -77,10 +83,16 @@ importers:
       socket.io:
         specifier: ^4.7.3
         version: 4.7.3
+      three:
+        specifier: ^0.161.0
+        version: 0.161.0
     devDependencies:
       '@types/node':
         specifier: ^20.10.6
         version: 20.10.6
+      '@types/three':
+        specifier: ^0.161.2
+        version: 0.161.2
       shared:
         specifier: workspace:^
         version: link:../../lib/shared
@@ -1650,7 +1662,6 @@ packages:
 
   /three@0.161.0:
     resolution: {integrity: sha512-LC28VFtjbOyEu5b93K0bNRLw1rQlMJ85lilKsYj6dgTu+7i17W+JCCEbvrpmNHF1F3NAUqDSWq50UD7w9H2xQw==}
-    dev: false
 
   /to-regex-range@5.0.1:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}

@@ -1,4 +1,5 @@
-import { EVENTS, Player } from 'shared'
+import { EVENTS } from 'shared'
+import { PlayerEntity } from '../entities'
 
 export class MultiplayerSystem {
     engine: any
@@ -29,8 +30,9 @@ export class MultiplayerSystem {
             // for each player in the state, generate a player entity
             state.players.forEach((player: any) => {
                 console.log('Position from server', player.position)
-                const playerEntity = new Player(player.id)
+                const playerEntity = new PlayerEntity(player.id)
                 playerEntity.setPosition(player.position)
+                playerEntity.buildMesh(this.engine.scene)
                 this.engine.players.push(playerEntity)
             })
             this.state = state
@@ -49,8 +51,9 @@ export class MultiplayerSystem {
                     !this.state.players.find((p: any) => p.id === player.id)
             )
             missingPlayers.forEach((player: any) => {
-                const playerEntity = new Player(player.id)
+                const playerEntity = new PlayerEntity(player.id)
                 playerEntity.setPosition(player.position)
+                playerEntity.buildMesh(this.engine.scene)
                 this.engine.players.push(playerEntity)
             })
 

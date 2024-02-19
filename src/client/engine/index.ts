@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { MultiplayerSystem } from './systems'
-import type { Player } from 'shared'
+import type { PlayerEntity } from './entities'
 
 interface EngineProps {
     canvas: HTMLCanvasElement
@@ -15,7 +15,7 @@ export class EngineService {
     public renderer: THREE.WebGLRenderer
     public socket: any
     public multiplayerSystem: MultiplayerSystem
-    public players: Player[] = []
+    public players: PlayerEntity[] = []
 
     constructor(props: EngineProps) {
         this.scene = new THREE.Scene()
