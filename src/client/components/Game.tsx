@@ -1,4 +1,4 @@
-import { EngineService } from './engine'
+import { EngineService } from '../engine'
 import { useEffect, useRef } from 'react'
 import io from 'socket.io-client'
 
