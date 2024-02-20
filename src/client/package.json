@@ -11,18 +11,18 @@
     "dependencies": {
         "@pixiv/three-vrm": "^2.1.0",
         "next": "14.0.4",
-        "react": "^18",
-        "react-dom": "^18",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
         "socket.io-client": "^4.7.3",
-        "three": "^0.161.0"
+        "three": "0.160.0"
     },
     "devDependencies": {
         "@types/node": "^20",
         "@types/react": "^18",
         "@types/react-dom": "^18",
-        "@types/three": "^0.161.2",
+        "@types/three": "0.160.0",
         "autoprefixer": "^10.0.1",
-        "postcss": "^8",
+        "postcss": "^8.4.21",
         "shared": "workspace:^",
         "tailwindcss": "^3.3.0",
         "typescript": "^5"
