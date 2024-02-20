@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 importers:
 
   .:
@@ -28,6 +32,9 @@ importers:
 
   src/client:
     dependencies:
+      '@pixiv/three-vrm':
+        specifier: ^2.1.0
+        version: 2.1.0(@types/three@0.161.2)(three@0.161.0)
       next:
         specifier: 14.0.4
         version: 14.0.4(react-dom@18.2.0)(react@18.2.0)
@@ -255,6 +262,114 @@ packages:
       fastq: 1.16.0
     dev: true
 
+  /@pixiv/three-vrm-core@2.1.0(@types/three@0.161.2)(three@0.161.0):
+    resolution: {integrity: sha512-k+E4ULLnetIFzsV6COs1bRi8G8WIf/Svo+89GBz0zUWVOVZqO+d18ylg5VDWs6mVqHN+xc505ApyYlCCEXcaVQ==}
+    peerDependencies:
+      '@types/three': ^0.160.0
+      three: ^0.160.0
+    dependencies:
+      '@pixiv/types-vrm-0.0': 2.1.0
+      '@pixiv/types-vrmc-vrm-1.0': 2.1.0
+      '@types/three': 0.161.2
+      three: 0.161.0
+    dev: false
+
+  /@pixiv/three-vrm-materials-hdr-emissive-multiplier@2.1.0(@types/three@0.161.2)(three@0.161.0):
+    resolution: {integrity: sha512-bdRKZd8EnCQJwwGoD9fQGnGh6olpoch6gdhlQTORgHR3/o1hoFAG4KnjiqsQw6qK5bMXUyt+nHGmG1GwNI7gUw==}
+    peerDependencies:
+      '@types/three': ^0.160.0
+      three: ^0.160.0
+    dependencies:
+      '@pixiv/types-vrmc-materials-hdr-emissive-multiplier-1.0': 2.1.0
+      '@types/three': 0.161.2
+      three: 0.161.0
+    dev: false
+
+  /@pixiv/three-vrm-materials-mtoon@2.1.0(@types/three@0.161.2)(three@0.161.0):
+    resolution: {integrity: sha512-8jBM0Xod1h0ITFJfieozUwUU7Sj7WmlJoGO9bLd5pqmFnkVIT6OM7Vtop4VmGsc6TqMP5NiVwOUKlQidNpUZkg==}
+    peerDependencies:
+      '@types/three': ^0.160.0
+      three: ^0.160.0
+    dependencies:
+      '@pixiv/types-vrm-0.0': 2.1.0
+      '@pixiv/types-vrmc-materials-mtoon-1.0': 2.1.0
+      '@types/three': 0.161.2
+      three: 0.161.0
+    dev: false
+
+  /@pixiv/three-vrm-materials-v0compat@2.1.0(@types/three@0.161.2)(three@0.161.0):
+    resolution: {integrity: sha512-LbFTN6P/gCzTnSEXXBYK8WEQtEGZzpi+hJGbsNUUKkamnVyr7CdogqiYxZz8EDPAn+oXh+7x8vQR9NDTuT3ILA==}
+    peerDependencies:
+      '@types/three': ^0.160.0
+      three: ^0.160.0
+    dependencies:
+      '@pixiv/types-vrm-0.0': 2.1.0
+      '@pixiv/types-vrmc-materials-mtoon-1.0': 2.1.0
+      '@types/three': 0.161.2
+      three: 0.161.0
+    dev: false
+
+  /@pixiv/three-vrm-node-constraint@2.1.0(@types/three@0.161.2)(three@0.161.0):
+    resolution: {integrity: sha512-NExbXThFRckIcJKi9was9pbA2L++8d/vjOAt3y9OtXWpT0QVnzxLv8vB1xOVGtidMtdS06bFsFPIOPz5XTb3GQ==}
+    peerDependencies:
+      '@types/three': ^0.160.0
+      three: ^0.160.0
+    dependencies:
+      '@pixiv/types-vrmc-node-constraint-1.0': 2.1.0
+      '@types/three': 0.161.2
+      three: 0.161.0
+    dev: false
+
+  /@pixiv/three-vrm-springbone@2.1.0(three@0.161.0):
+    resolution: {integrity: sha512-tYceFxWsUOB1TiRU+gZSWw2MB1UnmSP0p1d1XsS/PvT26GuYC+JfbJtmGoJo/gtqfKpltcuutUT6h/kewYAe4w==}
+    peerDependencies:
+      three: ^0.160.0
+    dependencies:
+      '@pixiv/types-vrm-0.0': 2.1.0
+      '@pixiv/types-vrmc-springbone-1.0': 2.1.0
+      three: 0.161.0
+    dev: false
+
+  /@pixiv/three-vrm@2.1.0(@types/three@0.161.2)(three@0.161.0):
+    resolution: {integrity: sha512-BxvhKAuptbKYkWXlnb89CJasbq4u0wlF2gM4ljSK9vqUvunw+3zAzkIV6FNtooJd2El5UWUlsY+5hft3ptp+2A==}
+    peerDependencies:
+      '@types/three': ^0.160.0
+      three: ^0.160.0
+    dependencies:
+      '@pixiv/three-vrm-core': 2.1.0(@types/three@0.161.2)(three@0.161.0)
+      '@pixiv/three-vrm-materials-hdr-emissive-multiplier': 2.1.0(@types/three@0.161.2)(three@0.161.0)
+      '@pixiv/three-vrm-materials-mtoon': 2.1.0(@types/three@0.161.2)(three@0.161.0)
+      '@pixiv/three-vrm-materials-v0compat': 2.1.0(@types/three@0.161.2)(three@0.161.0)
+      '@pixiv/three-vrm-node-constraint': 2.1.0(@types/three@0.161.2)(three@0.161.0)
+      '@pixiv/three-vrm-springbone': 2.1.0(three@0.161.0)
+      '@types/three': 0.161.2
+      three: 0.161.0
+    dev: false
+
+  /@pixiv/types-vrm-0.0@2.1.0:
+    resolution: {integrity: sha512-ccJGuTxJPCIgWXBDKTG/9ESMx6ZFcS0s3VjZG3L1Xz53YVVJR+YCSEivWmyT9qSQ6+GNyzOHuOopQrDVxGZWCw==}
+    dev: false
+
+  /@pixiv/types-vrmc-materials-hdr-emissive-multiplier-1.0@2.1.0:
+    resolution: {integrity: sha512-wFeoZTrf13K6t6Ah4quTCoRb74gvmnSUqumPZyQjSGLS/VJ8G3AzDUfXQyDiaK95rVqoYIP5ebY5mXTWnfq5xA==}
+    dev: false
+
+  /@pixiv/types-vrmc-materials-mtoon-1.0@2.1.0:
+    resolution: {integrity: sha512-qz1BX1WUf1zUoEz0yHfFZzLLhgvPdOvxBxmSrO79FFYqYS5Ej4xrjhiu7MyJjWL+o3DnspQygkPZPN+XXdytyg==}
+    dev: false
+
+  /@pixiv/types-vrmc-node-constraint-1.0@2.1.0:
+    resolution: {integrity: sha512-pLWr0yf+tlT1Z+79IGKHvtHO6nRllY53E/Iwp0/WHKdWgLBnbymCtPfo3hqMds5VtIP/tj2CDiip08HMvMP6zA==}
+    dev: false
+
+  /@pixiv/types-vrmc-springbone-1.0@2.1.0:
+    resolution: {integrity: sha512-YwkDUIT72oBrzl+Wo09scH1ztaQY71j0bzd8ISdVVuOUtTf3v35GK3ios0SnK5ezvNObAh6SP6mNVau74KQJgg==}
+    dev: false
+
+  /@pixiv/types-vrmc-vrm-1.0@2.1.0:
+    resolution: {integrity: sha512-fanxk+/M2h9ErUhqc1dyfyhPnT5RNcpI0++y6cfTZcqb3EiZFhijG4C4QptjelLJSn3wDWr6pvzotTxLAew5ug==}
+    dev: false
+
   /@pkgjs/parseargs@0.11.0:
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
@@ -317,7 +432,6 @@ packages:
 
   /@types/stats.js@0.17.3:
     resolution: {integrity: sha512-pXNfAD3KHOdif9EQXZ9deK82HVNaXP5ZIF5RP2QG6OQFNTaY2YIetfrE9t528vEreGQvEPRDDc8muaoYeK0SxQ==}
-    dev: true
 
   /@types/three@0.161.2:
     resolution: {integrity: sha512-DazpZ+cIfBzbW/p0zm6G8CS03HBMd748A3R1ZOXHpqaXZLv2I5zNgQUrRG//UfJ6zYFp2cUoCQaOLaz8ubH07w==}
@@ -326,11 +440,9 @@ packages:
       '@types/webxr': 0.5.14
       fflate: 0.6.10
       meshoptimizer: 0.18.1
-    dev: true
 
   /@types/webxr@0.5.14:
     resolution: {integrity: sha512-UEMMm/Xn3DtEa+gpzUrOcDj+SJS1tk5YodjwOxcqStNhCfPcwgyC5Srg2ToVKyg2Fhq16Ffpb0UWUQHqoT9AMA==}
-    dev: true
 
   /accepts@1.3.8:
     resolution: {integrity: sha512-PYAthTa2m2VKxuvSD3DPC/Gy+U+sOA1LAuT8mkmRuvw+NACSaeXEQ+NHcVF7rONl6qcaxV3Uuemwawk+7+SJLw==}
@@ -778,7 +890,6 @@ packages:
 
   /fflate@0.6.10:
     resolution: {integrity: sha512-IQrh3lEPM93wVCEczc9SaAOvkmcoQn/G8Bo1e8ZPlY3X3bnAxWaBdvTdvM1hP62iZp0BXWDy4vTAy4fF0+Dlpg==}
-    dev: true
 
   /fill-range@7.0.1:
     resolution: {integrity: sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ==}
@@ -1032,7 +1143,6 @@ packages:
 
   /meshoptimizer@0.18.1:
     resolution: {integrity: sha512-ZhoIoL7TNV4s5B6+rx5mC//fw8/POGyNxS/DZyCJeiZ12ScLfVwRE/GfsxwiTkMYYD5DmK2/JXnEVXqL4rF+Sw==}
-    dev: true
 
   /methods@1.1.2:
     resolution: {integrity: sha512-iclAHeNqNm68zFtnZ0e+1L2yUIdvzNoauKU4WBA3VvH/vPFieF7qfRlwUZU+DA9P9bPXIS90ulxoUoCH23sV2w==}
@@ -1790,7 +1900,3 @@ packages:
     resolution: {integrity: sha512-8aAvwVUSHpfEqTQ4w/KMlf3HcRdt50E5ODIQJBw1fQ5RL34xabzxtUlzTXVqc4rkZsPbvrXKWnABCD7kWSmocA==}
     engines: {node: '>= 14'}
     dev: true
-
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false

@@ -9,6 +9,7 @@
         "lint": "next lint"
     },
     "dependencies": {
+        "@pixiv/three-vrm": "^2.1.0",
         "next": "14.0.4",
         "react": "^18",
         "react-dom": "^18",

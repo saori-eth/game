@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import { MultiplayerSystem } from './systems'
+import { MultiplayerSystem, VRMSystem } from './systems'
 import type { PlayerEntity } from './entities'
 
 interface EngineProps {
@@ -13,8 +13,10 @@ export class EngineService {
     public scene: THREE.Scene
     public camera: THREE.PerspectiveCamera
     public renderer: THREE.WebGLRenderer
+    public clock: THREE.Clock = new THREE.Clock()
     public socket: any
     public multiplayerSystem: MultiplayerSystem
+    public vrmSystem: VRMSystem
     public players: PlayerEntity[] = []
 
     constructor(props: EngineProps) {
@@ -32,12 +34,14 @@ export class EngineService {
         this.renderer.setSize(window.innerWidth, window.innerHeight)
         this.socket = props.socket
         this.multiplayerSystem = new MultiplayerSystem(this)
+        this.vrmSystem = new VRMSystem(this)
         this.eventListeners()
         this.init()
         this.animate()
     }
 
     public init(): void {
+        this.vrmSystem.load('/avatar/avatar.vrm', '/avatar/idle.fbx')
         new OrbitControls(this.camera, this.renderer.domElement)
         this.camera.position.z = 0.5
         this.camera.position.y = 1.35
@@ -62,6 +66,8 @@ export class EngineService {
 
     animate(): void {
         requestAnimationFrame(this.animate.bind(this))
+        const delta = this.clock.getDelta()
+        this.vrmSystem.update(delta)
         this.renderer.render(this.scene, this.camera)
     }
 
