@@ -53,7 +53,7 @@ export class EngineService {
             .setPath('/skybox/')
             .load('night_sky.hdr', (texture) => {
                 texture.mapping = THREE.EquirectangularReflectionMapping
-                texture.colorSpace = THREE.SRGBColorSpace
+                texture.colorSpace = THREE.LinearSRGBColorSpace
 
                 this.scene.background = texture
                 this.scene.environment = texture
