@@ -6,6 +6,8 @@ import {
     VRMSystem,
     ControlSystem,
     MovementSystem,
+    CameraSystem,
+    RenderSystem,
 } from './systems'
 import type { PlayerEntity } from './entities'
 
@@ -16,46 +18,33 @@ interface EngineProps {
 
 export class EngineService {
     public scene: THREE.Scene
-    public camera: THREE.PerspectiveCamera
-    public renderer: THREE.WebGLRenderer
+    public canvas: HTMLCanvasElement
     public clock: THREE.Clock = new THREE.Clock()
     public socket: any
     public multiplayerSystem: MultiplayerSystem
     // public vrmSystem: VRMSystem
+    public renderSystem: RenderSystem
+    public cameraSystem: CameraSystem
     public controlSystem: ControlSystem
     public movementSystem: MovementSystem
     public players: PlayerEntity[] = []
 
     constructor(props: EngineProps) {
         this.scene = new THREE.Scene()
-        this.camera = new THREE.PerspectiveCamera(
-            75,
-            window.innerWidth / window.innerHeight,
-            0.1,
-            1000
-        )
-        this.renderer = new THREE.WebGLRenderer({
-            canvas: props.canvas,
-            antialias: true,
-        })
-        this.renderer.setSize(window.innerWidth, window.innerHeight)
+        this.canvas = props.canvas
         this.socket = props.socket
+        this.cameraSystem = new CameraSystem(this)
+        this.renderSystem = new RenderSystem(this)
         this.multiplayerSystem = new MultiplayerSystem(this)
         this.controlSystem = new ControlSystem(this)
         this.movementSystem = new MovementSystem(this)
         // this.vrmSystem = new VRMSystem(this)
-        this.eventListeners()
         this.init()
         this.animate()
     }
 
     public init(): void {
         // this.vrmSystem.load('/avatar/avatar.vrm', '/avatar/idle.fbx')
-        new OrbitControls(this.camera, this.renderer.domElement)
-        this.camera.position.z = 0.5
-        this.camera.position.y = 1.35
-        this.camera.far = 2000
-        this.camera.updateProjectionMatrix()
 
         // Load HDR environment
         new RGBELoader()
@@ -83,18 +72,11 @@ export class EngineService {
         // this.vrmSystem.update(delta)
         this.controlSystem.update()
         this.movementSystem.update(delta)
-        this.renderer.render(this.scene, this.camera)
+        this.cameraSystem.update(delta)
+        this.renderSystem.update(delta)
     }
 
     public destroy(): void {
         this.socket.disconnect()
-    }
-
-    private eventListeners(): void {
-        window.addEventListener('resize', () => {
-            this.camera.aspect = window.innerWidth / window.innerHeight
-            this.camera.updateProjectionMatrix()
-            this.renderer.setSize(window.innerWidth, window.innerHeight)
-        })
     }
 }
