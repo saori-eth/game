@@ -1,7 +1,12 @@
 import * as THREE from 'three'
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import { MultiplayerSystem, VRMSystem } from './systems'
+import {
+    MultiplayerSystem,
+    VRMSystem,
+    ControlSystem,
+    MovementSystem,
+} from './systems'
 import type { PlayerEntity } from './entities'
 
 interface EngineProps {
@@ -17,6 +22,8 @@ export class EngineService {
     public socket: any
     public multiplayerSystem: MultiplayerSystem
     public vrmSystem: VRMSystem
+    public controlSystem: ControlSystem
+    public movementSystem: MovementSystem
     public players: PlayerEntity[] = []
 
     constructor(props: EngineProps) {
@@ -34,6 +41,8 @@ export class EngineService {
         this.renderer.setSize(window.innerWidth, window.innerHeight)
         this.socket = props.socket
         this.multiplayerSystem = new MultiplayerSystem(this)
+        this.controlSystem = new ControlSystem(this)
+        this.movementSystem = new MovementSystem(this)
         this.vrmSystem = new VRMSystem(this)
         this.eventListeners()
         this.init()
@@ -68,6 +77,8 @@ export class EngineService {
         requestAnimationFrame(this.animate.bind(this))
         const delta = this.clock.getDelta()
         this.vrmSystem.update(delta)
+        this.controlSystem.update()
+        this.movementSystem.update(delta)
         this.renderer.render(this.scene, this.camera)
     }
 

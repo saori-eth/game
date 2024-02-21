@@ -35,6 +35,7 @@ export class MultiplayerSystem {
                 playerEntity.buildMesh(this.engine.scene)
                 this.engine.players.push(playerEntity)
             })
+            console.log('players: ', this.engine.players)
             this.state = state
             return
         }

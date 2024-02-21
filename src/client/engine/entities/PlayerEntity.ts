@@ -1,12 +1,19 @@
 import { Player } from 'shared'
+import type { ControlInterface } from '../systems/ControlSystem'
 import * as THREE from 'three'
 
 export class PlayerEntity extends Player {
     mesh: null | THREE.Mesh
+    inputs: null | ControlInterface
 
     constructor(id: string) {
         super(id)
         this.mesh = null
+        this.inputs = null
+    }
+
+    setInputs(inputs: ControlInterface) {
+        this.inputs = inputs
     }
 
     buildMesh(scene: THREE.Scene) {
