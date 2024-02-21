@@ -21,7 +21,7 @@ export class EngineService {
     public clock: THREE.Clock = new THREE.Clock()
     public socket: any
     public multiplayerSystem: MultiplayerSystem
-    public vrmSystem: VRMSystem
+    // public vrmSystem: VRMSystem
     public controlSystem: ControlSystem
     public movementSystem: MovementSystem
     public players: PlayerEntity[] = []
@@ -43,14 +43,14 @@ export class EngineService {
         this.multiplayerSystem = new MultiplayerSystem(this)
         this.controlSystem = new ControlSystem(this)
         this.movementSystem = new MovementSystem(this)
-        this.vrmSystem = new VRMSystem(this)
+        // this.vrmSystem = new VRMSystem(this)
         this.eventListeners()
         this.init()
         this.animate()
     }
 
     public init(): void {
-        this.vrmSystem.load('/avatar/avatar.vrm', '/avatar/idle.fbx')
+        // this.vrmSystem.load('/avatar/avatar.vrm', '/avatar/idle.fbx')
         new OrbitControls(this.camera, this.renderer.domElement)
         this.camera.position.z = 0.5
         this.camera.position.y = 1.35
@@ -68,7 +68,11 @@ export class EngineService {
                 this.scene.environment = texture
             })
 
-        // grid
+        // x = red, y = green, z = blue
+        const axesHelper = new THREE.AxesHelper(5)
+        axesHelper.position.y = 0.005
+        this.scene.add(axesHelper)
+        // Grid
         const grid = new THREE.GridHelper(20, 20)
         this.scene.add(grid)
     }
@@ -76,7 +80,7 @@ export class EngineService {
     animate(): void {
         requestAnimationFrame(this.animate.bind(this))
         const delta = this.clock.getDelta()
-        this.vrmSystem.update(delta)
+        // this.vrmSystem.update(delta)
         this.controlSystem.update()
         this.movementSystem.update(delta)
         this.renderer.render(this.scene, this.camera)
