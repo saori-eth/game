@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import Stats from 'stats.js'
 import {
     MultiplayerSystem,
     VRMSystem,
@@ -18,6 +18,7 @@ interface EngineProps {
 
 export class EngineService {
     public scene: THREE.Scene
+    public stats: Stats = new Stats()
     public canvas: HTMLCanvasElement
     public clock: THREE.Clock = new THREE.Clock()
     public socket: any
@@ -40,7 +41,13 @@ export class EngineService {
         this.movementSystem = new MovementSystem(this)
         // this.vrmSystem = new VRMSystem(this)
         this.init()
+        this.initStats()
         this.animate()
+    }
+
+    public initStats(): void {
+        this.stats.showPanel(0)
+        document.body.appendChild(this.stats.dom)
     }
 
     public init(): void {
@@ -67,6 +74,7 @@ export class EngineService {
     }
 
     animate(): void {
+        this.stats.begin()
         requestAnimationFrame(this.animate.bind(this))
         const delta = this.clock.getDelta()
         // this.vrmSystem.update(delta)
@@ -74,6 +82,7 @@ export class EngineService {
         this.movementSystem.update(delta)
         this.cameraSystem.update(delta)
         this.renderSystem.update(delta)
+        this.stats.end()
     }
 
     public destroy(): void {
