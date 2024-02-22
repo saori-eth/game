@@ -1,14 +1,16 @@
 import { EngineService } from '..'
-import { PerspectiveCamera } from 'three'
-import { OrbitControls } from 'three/examples/jsm/Addons.js'
+import { PerspectiveCamera, Vector3 } from 'three'
+
+const CAMERA_OFFSET = new Vector3(0, 2, 10)
 
 export class CameraSystem {
     private engine: EngineService
+    private players: EngineService['players']
     private scene: THREE.Scene
     public camera: PerspectiveCamera
-    public controls: OrbitControls
     constructor(engine: EngineService) {
         this.engine = engine
+        this.players = engine.players
         this.scene = engine.scene
         this.camera = new PerspectiveCamera(
             75,
@@ -16,13 +18,24 @@ export class CameraSystem {
             0.1,
             1000
         )
-        this.camera.position.set(0, 2, 10)
-        this.camera.lookAt(0, 0, 0)
-        this.controls = new OrbitControls(this.camera, this.engine.canvas)
         this.resizeListener()
     }
     update(delta: number) {
-        this.controls.update()
+        this.players.forEach((player) => {
+            if (!player.position) return
+
+            this.camera.position.set(
+                player.position.x + CAMERA_OFFSET.x,
+                player.position.y + CAMERA_OFFSET.y,
+                player.position.z + CAMERA_OFFSET.z
+            )
+
+            this.camera.lookAt(
+                player.position.x,
+                player.position.y,
+                player.position.z
+            )
+        })
     }
     resizeListener() {
         window.addEventListener('resize', () => {
