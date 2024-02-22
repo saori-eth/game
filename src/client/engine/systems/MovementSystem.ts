@@ -7,7 +7,7 @@ export class MovementSystem {
     constructor(engine: EngineService) {
         this.engine = engine
         this.players = engine.players
-        this.speed = 1
+        this.speed = 5
     }
 
     update(delta: number) {
@@ -46,7 +46,7 @@ export class MovementSystem {
         player.mesh.position.z = player.position.z
 
         if (player.inputs.movementX !== 0) {
-            player.mesh.rotation.y -= player.inputs.movementX * 0.01
+            player.mesh.rotation.y -= player.inputs.movementX * 0.005
             player.inputs.movementX = 0
         }
     }
