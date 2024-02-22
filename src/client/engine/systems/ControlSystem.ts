@@ -54,6 +54,30 @@ export class ControlSystem {
                     break
             }
         })
+        this.engine.canvas.addEventListener('click', () => {
+            this.engine.canvas.requestPointerLock()
+        })
+        document.addEventListener('pointerlockchange', () => {
+            const isPointerLocked = this.isCanvasInPoinerLock()
+            if (isPointerLocked) {
+                this.engine.canvas.addEventListener(
+                    'mousemove',
+                    this.onMouseMove.bind(this)
+                )
+            } else {
+                this.engine.canvas.removeEventListener(
+                    'mousemove',
+                    this.onMouseMove.bind(this)
+                )
+            }
+        })
+    }
+    isCanvasInPoinerLock() {
+        return document.pointerLockElement === this.engine.canvas
+    }
+    onMouseMove(event: MouseEvent) {
+        if (!this.isCanvasInPoinerLock()) return
+        console.log(event.movementX, event.movementY)
     }
     update() {
         const player = this.engine.players.find(
