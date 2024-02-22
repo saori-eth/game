@@ -22,21 +22,33 @@ export class CameraSystem {
     }
     update(delta: number) {
         this.players.forEach((player) => {
-            if (!player.position) return
+            if (!player.position || !player.mesh) return
 
+            // Calculate the rotated camera offset
+            //! WARNING i dont understand this code
+            const rotatedOffsetX =
+                CAMERA_OFFSET.z * Math.sin(player.mesh.rotation.y)
+            const rotatedOffsetZ =
+                CAMERA_OFFSET.z * Math.cos(player.mesh.rotation.y)
+
+            // Update camera position with rotated offset
             this.camera.position.set(
-                player.position.x + CAMERA_OFFSET.x,
-                player.position.y + CAMERA_OFFSET.y,
-                player.position.z + CAMERA_OFFSET.z
+                player.position.x + rotatedOffsetX,
+                player.position.y + CAMERA_OFFSET.y, // Keep Y offset as is
+                player.position.z + rotatedOffsetZ
             )
 
+            // Ensure the camera looks at the player
             this.camera.lookAt(
-                player.position.x,
-                player.position.y,
-                player.position.z
+                new Vector3(
+                    player.position.x,
+                    player.position.y,
+                    player.position.z
+                )
             )
         })
     }
+
     resizeListener() {
         window.addEventListener('resize', () => {
             this.camera.aspect = window.innerWidth / window.innerHeight
