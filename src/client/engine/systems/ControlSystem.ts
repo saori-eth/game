@@ -6,6 +6,8 @@ export interface ControlInterface {
     a: boolean
     s: boolean
     d: boolean
+    movementX: number
+    movementY: number
 }
 
 export class ControlSystem {
@@ -18,6 +20,8 @@ export class ControlSystem {
             a: false,
             s: false,
             d: false,
+            movementX: 0,
+            movementY: 0,
         }
         this.initListeners()
     }
@@ -57,27 +61,17 @@ export class ControlSystem {
         this.engine.canvas.addEventListener('click', () => {
             this.engine.canvas.requestPointerLock()
         })
-        document.addEventListener('pointerlockchange', () => {
-            const isPointerLocked = this.isCanvasInPoinerLock()
-            if (isPointerLocked) {
-                this.engine.canvas.addEventListener(
-                    'mousemove',
-                    this.onMouseMove.bind(this)
-                )
-            } else {
-                this.engine.canvas.removeEventListener(
-                    'mousemove',
-                    this.onMouseMove.bind(this)
-                )
-            }
+        this.engine.canvas.addEventListener('mousemove', (e) => {
+            if (!this.isCanvasInPoinerLock()) return
+            this.onMouseMove(e)
         })
     }
     isCanvasInPoinerLock() {
         return document.pointerLockElement === this.engine.canvas
     }
     onMouseMove(event: MouseEvent) {
-        if (!this.isCanvasInPoinerLock()) return
-        console.log(event.movementX, event.movementY)
+        this.controls.movementX = event.movementX
+        this.controls.movementY = event.movementY
     }
     update() {
         const player = this.engine.players.find(

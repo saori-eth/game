@@ -33,5 +33,9 @@ export class MovementSystem {
             player.position.x += this.speed * delta
             player.mesh.position.x = player.position.x
         }
+        if (player.inputs.movementX !== 0) {
+            player.mesh.rotation.y -= player.inputs.movementX * 0.01
+            player.inputs.movementX = 0
+        }
     }
 }
