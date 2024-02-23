@@ -69,7 +69,7 @@ export class EngineService {
         axesHelper.position.y = 0.005
         this.scene.add(axesHelper)
         // Grid
-        const grid = new THREE.GridHelper(20, 20)
+        const grid = new THREE.GridHelper(40, 20, 0x444444, 0x444444)
         this.scene.add(grid)
     }
 
