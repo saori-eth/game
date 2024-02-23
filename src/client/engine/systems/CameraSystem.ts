@@ -38,9 +38,9 @@ export class CameraSystem {
 
         this.cameraAzimuthalAngle += angleX
         this.cameraPolarAngle = Math.max(
-            0.1,
-            Math.min(Math.PI / 2, this.cameraPolarAngle + angleY)
-        )
+            Math.PI / 6,
+            Math.min(Math.PI / 2 + Math.PI / 4, this.cameraPolarAngle + angleY)
+        ) // slightly limiting the camera's vertical position
 
         const x =
             playerPos.x +

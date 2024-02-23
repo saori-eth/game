@@ -21,36 +21,36 @@ export class MovementSystem {
     movePlayer(player: any, delta: number) {
         const rotationY = player.mesh.rotation.y
         const inputs = this.engine.controlSystem.controls
+        let dx = 0,
+            dz = 0
 
-        //! WARNING i dont understand this code
         if (inputs.w) {
-            player.position.x -= Math.sin(rotationY) * this.speed * delta
-            player.position.z -= Math.cos(rotationY) * this.speed * delta
+            dx -= Math.sin(rotationY) * this.speed * delta
+            dz -= Math.cos(rotationY) * this.speed * delta
         }
         if (inputs.s) {
-            player.position.x += Math.sin(rotationY) * this.speed * delta
-            player.position.z += Math.cos(rotationY) * this.speed * delta
+            dx += Math.sin(rotationY) * this.speed * delta
+            dz += Math.cos(rotationY) * this.speed * delta
         }
         if (inputs.a) {
-            player.position.x +=
-                Math.sin(rotationY - Math.PI / 2) * this.speed * delta
-            player.position.z +=
-                Math.cos(rotationY - Math.PI / 2) * this.speed * delta
+            dx += Math.sin(rotationY - Math.PI / 2) * this.speed * delta
+            dz += Math.cos(rotationY - Math.PI / 2) * this.speed * delta
         }
         if (inputs.d) {
-            player.position.x +=
-                Math.sin(rotationY + Math.PI / 2) * this.speed * delta
-            player.position.z +=
-                Math.cos(rotationY + Math.PI / 2) * this.speed * delta
+            dx += Math.sin(rotationY + Math.PI / 2) * this.speed * delta
+            dz += Math.cos(rotationY + Math.PI / 2) * this.speed * delta
         }
 
-        // Update mesh position once at the end
-        player.mesh.position.x = player.position.x
-        player.mesh.position.z = player.position.z
+        player.position.x += dx
+        player.position.z += dz
+        player.mesh.position.set(
+            player.position.x,
+            player.mesh.position.y,
+            player.position.z
+        )
 
-        if (this.engine.controlSystem.controls.movementX) {
-            player.mesh.rotation.y -=
-                this.engine.controlSystem.controls.movementX * 0.005
+        if (inputs.movementX) {
+            player.mesh.rotation.y -= inputs.movementX * 0.005
         }
     }
 }
