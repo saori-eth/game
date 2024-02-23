@@ -1,12 +1,12 @@
 import { EngineService } from '@/engine'
-import { PerspectiveCamera, Vector3 } from 'three'
+import { PerspectiveCamera } from 'three'
 
 export class CameraSystem {
     private engine: EngineService
     public camera: PerspectiveCamera
-    private cameraDistance: number = 5 // Distance of the camera from the player
-    private cameraPolarAngle: number = Math.PI / 4 // Initial polar angle
-    private cameraAzimuthalAngle: number = 0 // Initial azimuthal angle
+    private cameraDistance: number = 5
+    private cameraPolarAngle: number = Math.PI / 3
+    private cameraAzimuthalAngle: number = Math.PI / 2
 
     constructor(engine: EngineService) {
         this.engine = engine
@@ -16,8 +16,6 @@ export class CameraSystem {
             0.1,
             1000
         )
-        this.camera.position.set(0, this.cameraDistance, this.cameraDistance)
-        this.camera.lookAt(new Vector3(0, 0, 0)) // Assuming player is at the origin
     }
 
     public update(): void {
@@ -38,21 +36,29 @@ export class CameraSystem {
             Math.min(Math.PI / 2, this.cameraPolarAngle + angleY)
         ) // Clamp the polar angle
 
-        // Calculate new camera position
+        // Calculate new camera position relative to the player's position
         const x =
+            player.position.x +
             this.cameraDistance *
-            Math.sin(this.cameraPolarAngle) *
-            Math.cos(this.cameraAzimuthalAngle)
-        const y = this.cameraDistance * Math.cos(this.cameraPolarAngle)
+                Math.sin(this.cameraPolarAngle) *
+                Math.cos(this.cameraAzimuthalAngle)
+        const y =
+            player.position.y +
+            this.cameraDistance * Math.cos(this.cameraPolarAngle)
         const z =
+            player.position.z +
             this.cameraDistance *
-            Math.sin(this.cameraPolarAngle) *
-            Math.sin(this.cameraAzimuthalAngle)
+                Math.sin(this.cameraPolarAngle) *
+                Math.sin(this.cameraAzimuthalAngle)
 
         this.camera.position.set(x, y, z)
-        this.camera.lookAt(new Vector3(0, 0, 0)) // Assuming the player is at the origin
+        this.camera.lookAt(
+            player.position.x,
+            player.position.y,
+            player.position.z
+        )
 
-        // Update camera distance
+        // Update camera distance based on input
         this.cameraDistance -= -controls.deltaY * 0.01 // Sensitivity adjustment
         this.cameraDistance = Math.max(2, Math.min(20, this.cameraDistance)) // Clamp the distance
 

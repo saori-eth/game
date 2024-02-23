@@ -47,5 +47,10 @@ export class MovementSystem {
         // Update mesh position once at the end
         player.mesh.position.x = player.position.x
         player.mesh.position.z = player.position.z
+
+        if (this.engine.controlSystem.controls.movementX) {
+            player.mesh.rotation.y -=
+                this.engine.controlSystem.controls.movementX * 0.005
+        }
     }
 }
