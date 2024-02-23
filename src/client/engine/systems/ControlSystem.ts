@@ -8,11 +8,12 @@ export interface ControlInterface {
     d: boolean
     movementX: number
     movementY: number
+    deltaY: number
 }
 
 export class ControlSystem {
     private engine: EngineService
-    private controls: ControlInterface
+    public controls: ControlInterface
     constructor(engine: EngineService) {
         this.engine = engine
         this.controls = {
@@ -22,6 +23,7 @@ export class ControlSystem {
             d: false,
             movementX: 0,
             movementY: 0,
+            deltaY: 0,
         }
         this.initListeners()
     }
@@ -65,9 +67,16 @@ export class ControlSystem {
             if (!this.isCanvasInPoinerLock()) return
             this.onMouseMove(e)
         })
+        this.engine.canvas.addEventListener('wheel', (e) => {
+            if (!this.isCanvasInPoinerLock()) return
+            this.onWheel(e)
+        })
     }
     isCanvasInPoinerLock() {
         return document.pointerLockElement === this.engine.canvas
+    }
+    onWheel(event: WheelEvent) {
+        this.controls.deltaY = event.deltaY
     }
     onMouseMove(event: MouseEvent) {
         this.controls.movementX = event.movementX
@@ -78,6 +87,5 @@ export class ControlSystem {
             (player) => player.id === this.engine.multiplayerSystem.id
         )
         if (!player) return console.log('no player found')
-        player.setInputs(this.controls)
     }
 }
