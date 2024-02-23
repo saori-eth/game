@@ -1,12 +1,13 @@
 import { EVENTS } from 'shared'
 import { PlayerEntity } from '../entities'
+import type { EngineService } from '..'
 
 export class MultiplayerSystem {
-    engine: any
+    engine: EngineService
+    state: any
     id: string | undefined
     tickRate: number | undefined
-    state: any
-    constructor(engine: any) {
+    constructor(engine: EngineService) {
         this.engine = engine
         this.init()
     }
@@ -19,6 +20,7 @@ export class MultiplayerSystem {
         })
         this.engine.socket.on('game_state', (state: any) => {
             if (!state.players) return console.log('no players in state')
+            // observes state changes and updates players
             this.managePlayers(state)
         })
     }
@@ -27,56 +29,66 @@ export class MultiplayerSystem {
         // case: initializing new game
         if (!this.state && state.players.length > 0) {
             console.log('initializing state')
-            // for each player in the state, generate a player entity
-            state.players.forEach((player: any) => {
-                console.log('Position from server', player.position)
-                const playerEntity = new PlayerEntity(player.id)
-                playerEntity.setPosition(player.position)
-                playerEntity.buildMesh(this.engine.scene)
-                this.engine.players.push(playerEntity)
-            })
-            console.log('players: ', this.engine.players)
+            this.handleInitialize(state.players)
             this.state = state
             return
         }
-
-        if (!this.state) return console.log('no state to compare to yet')
 
         const playerDifference =
             state.players.length - this.state.players.length
 
         // case: adding player
         if (playerDifference > 0) {
-            const missingPlayers = state.players.filter(
-                (player: any) =>
-                    !this.state.players.find((p: any) => p.id === player.id)
-            )
-            missingPlayers.forEach((player: any) => {
-                const playerEntity = new PlayerEntity(player.id)
-                playerEntity.setPosition(player.position)
-                playerEntity.buildMesh(this.engine.scene)
-                this.engine.players.push(playerEntity)
-            })
-
+            console.log('adding players')
+            this.handleNewPlayer(state.players)
             // case: removing player
         } else if (playerDifference < 0) {
-            const missingPlayers = this.state.players.filter(
-                (player: any) =>
-                    !state.players.find((p: any) => p.id === player.id)
-            )
-
-            console.log('removing players', missingPlayers)
-
-            missingPlayers.forEach((player: any) => {
-                const playerEntity = this.engine.players.find(
-                    (p: any) => p.id === player.id
-                )
-                playerEntity.dispose()
-                this.engine.players = this.engine.players.filter(
-                    (p: any) => p.id !== player.id
-                )
-            })
+            console.log('removing players')
+            this.handleMissingPlayer(state.players)
         }
         this.state = state
+    }
+
+    handleInitialize(players: any) {
+        players.forEach((player: any) => {
+            console.log('Position from server', player.position)
+            const playerEntity = new PlayerEntity(player.id)
+            playerEntity.setPosition(player.position)
+            playerEntity.buildMesh(this.engine.scene)
+            this.engine.players.push(playerEntity)
+        })
+    }
+
+    handleNewPlayer(players: any) {
+        const missingPlayers = players.filter(
+            (player: any) =>
+                !this.state.players.find((p: any) => p.id === player.id)
+        )
+        missingPlayers.forEach((player: any) => {
+            const playerEntity = new PlayerEntity(player.id)
+            playerEntity.setPosition(player.position)
+            playerEntity.buildMesh(this.engine.scene)
+            this.engine.players.push(playerEntity)
+        })
+    }
+
+    handleMissingPlayer(players: any) {
+        const missingPlayers = players.filter(
+            (player: any) => !players.find((p: any) => p.id === player.id)
+        )
+
+        console.log('removing players', missingPlayers)
+
+        missingPlayers.forEach((player: any) => {
+            const playerEntity = this.engine.players.find(
+                (p: any) => p.id === player.id
+            )
+            if (!playerEntity)
+                return console.log('tried to remove non-existent player')
+            playerEntity.dispose()
+            this.engine.players = this.engine.players.filter(
+                (p: any) => p.id !== player.id
+            )
+        })
     }
 }

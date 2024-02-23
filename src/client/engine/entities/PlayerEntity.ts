@@ -24,8 +24,6 @@ export class PlayerEntity {
 
     buildMesh(scene: THREE.Scene) {
         if (this.position) {
-            console.log('Building mesh for player', this.id)
-            console.log('location', this.position)
             const geometry = new THREE.BoxGeometry(1, 1, 1)
             const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 })
             this.mesh = new THREE.Mesh(geometry, material)
