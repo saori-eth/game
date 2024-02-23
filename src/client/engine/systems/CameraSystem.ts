@@ -1,62 +1,69 @@
-import { EngineService } from '..'
-import { PerspectiveCamera, Vector3 } from 'three'
+import { EngineService } from '@/engine'
+import { PerspectiveCamera } from 'three'
 
-const CAMERA_OFFSET = new Vector3(0, 2, 10)
+const MOUSE_SENSITIVITY = 0.005
+const ZOOM_SENSITIVITY = 0.01
+const MAX_ZOOM = 10
+const MIN_ZOOM = 0.01
 
 export class CameraSystem {
     private engine: EngineService
-    private players: EngineService['players']
-    private scene: THREE.Scene
     public camera: PerspectiveCamera
+    private cameraDistance: number = 5
+    private cameraPolarAngle: number = Math.PI / 3
+    private cameraAzimuthalAngle: number = Math.PI / 2
+
     constructor(engine: EngineService) {
         this.engine = engine
-        this.players = engine.players
-        this.scene = engine.scene
         this.camera = new PerspectiveCamera(
             75,
             window.innerWidth / window.innerHeight,
             0.1,
             1000
         )
-        this.resizeListener()
-    }
-    update(delta: number) {
-        this.players.forEach((player) => {
-            if (!player.position || !player.mesh) return
-
-            // Calculate the rotated camera offset
-            //! WARNING i dont understand this code
-            const rotatedOffsetX =
-                CAMERA_OFFSET.z * Math.sin(player.mesh.rotation.y)
-            const rotatedOffsetZ =
-                CAMERA_OFFSET.z * Math.cos(player.mesh.rotation.y)
-
-            // Update camera position with rotated offset
-            this.camera.position.set(
-                player.position.x + rotatedOffsetX,
-                player.position.y + CAMERA_OFFSET.y, // Keep Y offset as is
-                player.position.z + rotatedOffsetZ
-            )
-
-            // Ensure the camera looks at the player
-            this.camera.lookAt(
-                new Vector3(
-                    player.position.x,
-                    player.position.y,
-                    player.position.z
-                )
-            )
-        })
     }
 
-    resizeListener() {
-        window.addEventListener('resize', () => {
-            this.camera.aspect = window.innerWidth / window.innerHeight
-            this.camera.updateProjectionMatrix()
-            this.engine.renderSystem.renderer.setSize(
-                window.innerWidth,
-                window.innerHeight
-            )
-        })
+    public update(): void {
+        const player = this.engine.players.find(
+            (p) => p.id === this.engine.multiplayerSystem.id
+        )
+        if (!player || !player.mesh || !player.position) return
+
+        const playerPos = player.position
+
+        const { movementX, movementY, deltaY } =
+            this.engine.controlSystem.controls
+        const angleX = movementX * MOUSE_SENSITIVITY,
+            angleY = -movementY * MOUSE_SENSITIVITY
+
+        this.cameraAzimuthalAngle += angleX
+        this.cameraPolarAngle = Math.max(
+            0.1,
+            Math.min(Math.PI / 2, this.cameraPolarAngle + angleY)
+        )
+
+        const x =
+            playerPos.x +
+            this.cameraDistance *
+                Math.sin(this.cameraPolarAngle) *
+                Math.cos(this.cameraAzimuthalAngle)
+        const y =
+            playerPos.y + this.cameraDistance * Math.cos(this.cameraPolarAngle)
+        const z =
+            playerPos.z +
+            this.cameraDistance *
+                Math.sin(this.cameraPolarAngle) *
+                Math.sin(this.cameraAzimuthalAngle)
+
+        this.camera.position.set(x, y, z)
+        this.camera.lookAt(playerPos.x, playerPos.y, playerPos.z)
+
+        this.cameraDistance += deltaY * ZOOM_SENSITIVITY
+        this.cameraDistance = Math.max(
+            MIN_ZOOM,
+            Math.min(MAX_ZOOM, this.cameraDistance)
+        )
+
+        this.engine.controlSystem.resetControls()
     }
 }

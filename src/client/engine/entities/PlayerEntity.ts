@@ -6,18 +6,12 @@ export class PlayerEntity {
     position: null | THREE.Vector3
     rotation: null | THREE.Euler
     mesh: null | THREE.Mesh
-    inputs: null | ControlInterface
 
     constructor(id: string) {
         this.id = id
         this.position = null
         this.rotation = null
         this.mesh = null
-        this.inputs = null
-    }
-
-    setInputs(inputs: ControlInterface) {
-        this.inputs = inputs
     }
 
     setPosition(pos: THREE.Vector3) {

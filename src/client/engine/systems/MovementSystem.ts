@@ -11,30 +11,33 @@ export class MovementSystem {
     }
 
     update(delta: number) {
-        this.players.forEach((player) => {
-            player.inputs && this.movePlayer(player, delta)
-        })
+        const player = this.players.find(
+            (player) => player.id === this.engine.multiplayerSystem.id
+        )
+        if (!player) return
+        this.movePlayer(player, delta)
     }
 
     movePlayer(player: any, delta: number) {
         const rotationY = player.mesh.rotation.y
+        const inputs = this.engine.controlSystem.controls
 
         //! WARNING i dont understand this code
-        if (player.inputs.w) {
+        if (inputs.w) {
             player.position.x -= Math.sin(rotationY) * this.speed * delta
             player.position.z -= Math.cos(rotationY) * this.speed * delta
         }
-        if (player.inputs.s) {
+        if (inputs.s) {
             player.position.x += Math.sin(rotationY) * this.speed * delta
             player.position.z += Math.cos(rotationY) * this.speed * delta
         }
-        if (player.inputs.a) {
+        if (inputs.a) {
             player.position.x +=
                 Math.sin(rotationY - Math.PI / 2) * this.speed * delta
             player.position.z +=
                 Math.cos(rotationY - Math.PI / 2) * this.speed * delta
         }
-        if (player.inputs.d) {
+        if (inputs.d) {
             player.position.x +=
                 Math.sin(rotationY + Math.PI / 2) * this.speed * delta
             player.position.z +=
@@ -45,9 +48,9 @@ export class MovementSystem {
         player.mesh.position.x = player.position.x
         player.mesh.position.z = player.position.z
 
-        if (player.inputs.movementX !== 0) {
-            player.mesh.rotation.y -= player.inputs.movementX * 0.005
-            player.inputs.movementX = 0
+        if (this.engine.controlSystem.controls.movementX) {
+            player.mesh.rotation.y -=
+                this.engine.controlSystem.controls.movementX * 0.005
         }
     }
 }

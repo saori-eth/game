@@ -80,7 +80,7 @@ export class EngineService {
         // this.vrmSystem.update(delta)
         this.controlSystem.update()
         this.movementSystem.update(delta)
-        this.cameraSystem.update(delta)
+        this.cameraSystem.update()
         this.renderSystem.update(delta)
         this.stats.end()
     }
