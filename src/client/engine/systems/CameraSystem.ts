@@ -55,5 +55,7 @@ export class CameraSystem {
         // Update camera distance
         this.cameraDistance -= -controls.deltaY * 0.01 // Sensitivity adjustment
         this.cameraDistance = Math.max(2, Math.min(20, this.cameraDistance)) // Clamp the distance
+
+        this.engine.controlSystem.resetControls()
     }
 }

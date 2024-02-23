@@ -82,6 +82,11 @@ export class ControlSystem {
         this.controls.movementX = event.movementX
         this.controls.movementY = event.movementY
     }
+    resetControls() {
+        this.controls.movementX = 0
+        this.controls.movementY = 0
+        this.controls.deltaY = 0
+    }
     update() {
         const player = this.engine.players.find(
             (player) => player.id === this.engine.multiplayerSystem.id
