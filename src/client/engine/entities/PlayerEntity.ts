@@ -1,12 +1,31 @@
-import { Player } from 'shared'
+import type { ControlInterface } from '../systems/ControlSystem'
 import * as THREE from 'three'
 
-export class PlayerEntity extends Player {
+export class PlayerEntity {
+    id: string
+    position: null | THREE.Vector3
+    rotation: null | THREE.Euler
     mesh: null | THREE.Mesh
+    inputs: null | ControlInterface
 
     constructor(id: string) {
-        super(id)
+        this.id = id
+        this.position = null
+        this.rotation = null
         this.mesh = null
+        this.inputs = null
+    }
+
+    setInputs(inputs: ControlInterface) {
+        this.inputs = inputs
+    }
+
+    setPosition(pos: THREE.Vector3) {
+        this.position = pos
+    }
+
+    setRotation(rot: THREE.Euler) {
+        this.rotation = rot
     }
 
     buildMesh(scene: THREE.Scene) {
