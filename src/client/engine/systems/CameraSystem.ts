@@ -24,9 +24,7 @@ export class CameraSystem {
     }
 
     public update(): void {
-        const player = this.engine.players.find(
-            (p) => p.id === this.engine.multiplayerSystem.id
-        )
+        const player = this.engine.getLocalPlayer()
         if (!player || !player.mesh || !player.position) return
 
         const playerPos = player.position

@@ -88,9 +88,7 @@ export class ControlSystem {
         this.controls.deltaY = 0
     }
     update() {
-        const player = this.engine.players.find(
-            (player) => player.id === this.engine.multiplayerSystem.id
-        )
-        if (!player) return console.log('no player found')
+        const player = this.engine.getLocalPlayer()
+        if (!player) return
     }
 }

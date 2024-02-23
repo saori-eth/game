@@ -85,6 +85,10 @@ export class EngineService {
         this.stats.end()
     }
 
+    getLocalPlayer(): PlayerEntity | undefined {
+        return this.players.find((p) => p.id === this.multiplayerSystem.id)
+    }
+
     public destroy(): void {
         this.socket.disconnect()
     }

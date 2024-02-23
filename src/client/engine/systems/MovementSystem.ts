@@ -2,18 +2,14 @@ import { EngineService } from '..'
 
 export class MovementSystem {
     private engine: EngineService
-    private players: EngineService['players']
     private speed: number
     constructor(engine: EngineService) {
         this.engine = engine
-        this.players = engine.players
         this.speed = 5
     }
 
     update(delta: number) {
-        const player = this.players.find(
-            (player) => player.id === this.engine.multiplayerSystem.id
-        )
+        const player = this.engine.getLocalPlayer()
         if (!player) return
         this.movePlayer(player, delta)
     }
