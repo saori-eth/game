@@ -8,9 +8,7 @@ export class RenderSystem {
         this.engine = engine
         this.renderer = new WebGLRenderer({ canvas: engine.canvas })
         this.renderer.setSize(window.innerWidth, window.innerHeight)
-        this.renderer.setPixelRatio(window.devicePixelRatio)
         window.addEventListener('resize', () => {
-            this.renderer.setSize(window.innerWidth, window.innerHeight)
             this.engine.cameraSystem.camera.aspect =
                 window.innerWidth / window.innerHeight
             this.engine.cameraSystem.camera.updateProjectionMatrix()
