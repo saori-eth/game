@@ -6,8 +6,11 @@ export class RenderSystem {
     public renderer: WebGLRenderer
     constructor(engine: EngineService) {
         this.engine = engine
-        this.renderer = new WebGLRenderer({ canvas: engine.canvas })
-        this.renderer.setSize(window.innerWidth, window.innerHeight)
+        this.renderer = new WebGLRenderer({
+            canvas: engine.canvas,
+            antialias: true,
+        })
+        this.renderer.setSize(window.innerWidth, window.innerHeight, false)
         window.addEventListener('resize', () => {
             this.engine.cameraSystem.camera.aspect =
                 window.innerWidth / window.innerHeight
