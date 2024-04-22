@@ -29,35 +29,31 @@ export class ControlSystem {
     }
     initListeners() {
         window.addEventListener('keydown', (e) => {
-            switch (e.key) {
-                case 'w':
-                    this.controls.w = true
-                    break
-                case 'a':
-                    this.controls.a = true
-                    break
-                case 's':
-                    this.controls.s = true
-                    break
-                case 'd':
-                    this.controls.d = true
-                    break
+            if (e.key === 'w' || e.key === 'W') {
+                this.controls.w = true
+            }
+            if (e.key === 'a' || e.key === 'A') {
+                this.controls.a = true
+            }
+            if (e.key === 's' || e.key === 'S') {
+                this.controls.s = true
+            }
+            if (e.key === 'd' || e.key === 'D') {
+                this.controls.d = true
             }
         })
         window.addEventListener('keyup', (e) => {
-            switch (e.key) {
-                case 'w':
-                    this.controls.w = false
-                    break
-                case 'a':
-                    this.controls.a = false
-                    break
-                case 's':
-                    this.controls.s = false
-                    break
-                case 'd':
-                    this.controls.d = false
-                    break
+            if (e.key === 'w' || e.key === 'W') {
+                this.controls.w = false
+            }
+            if (e.key === 'a' || e.key === 'A') {
+                this.controls.a = false
+            }
+            if (e.key === 's' || e.key === 'S') {
+                this.controls.s = false
+            }
+            if (e.key === 'd' || e.key === 'D') {
+                this.controls.d = false
             }
         })
         this.engine.canvas.addEventListener('click', () => {
