@@ -1,4 +1,5 @@
 import type { ControlInterface } from '../systems/ControlSystem'
+import { PlayerPosition } from 'shared'
 import * as THREE from 'three'
 
 export class PlayerEntity {
@@ -16,6 +17,10 @@ export class PlayerEntity {
 
     setPosition(pos: THREE.Vector3) {
         this.position = pos
+    }
+
+    setPositionFromArray(pos: PlayerPosition) {
+        this.position = new THREE.Vector3(pos[0], pos[1], pos[2])
     }
 
     setRotation(rot: THREE.Euler) {
