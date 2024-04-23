@@ -56,6 +56,8 @@ export class MultiplayerSystem {
             const playerEntity = new PlayerEntity(player.id)
             if (!player.position) return console.log('no position')
             playerEntity.setPositionFromArray(player.position)
+            // TODO: this is placeholder rotation. need to generate rotation on server
+            playerEntity.setRotationFromArray([0, 0, 0])
             playerEntity.buildMesh(this.engine.scene)
             this.engine.players.push(playerEntity)
         })
@@ -72,6 +74,8 @@ export class MultiplayerSystem {
             const playerEntity = new PlayerEntity(player.id)
             if (!player.position) return console.log('no position')
             playerEntity.setPositionFromArray(player.position)
+            // TODO: this is placeholder rotation. need to generate rotation on server
+            playerEntity.setRotationFromArray([0, 0, 0])
             playerEntity.buildMesh(this.engine.scene)
             this.engine.players.push(playerEntity)
         })
@@ -102,13 +106,11 @@ export class MultiplayerSystem {
         const player = this.engine.players.find(
             (player: PlayerEntity) => player.id === this.id
         )
-        if (!player || !player.position) return
+        if (!player || !player.position || !player.rotation) return
         this.engine.socket.emit('player_update', {
             id: this.id,
             position: player.position.toArray(),
-            // TODO: need to make a mesh system separate from movement system because right now MovementSystem is updating mesh rotation but not PlayerEntity rotation
-            // rotation: player.rotation.toArray(),
-            rotation: [0, 0, 0, 'XYZ'],
+            rotation: player.rotation.toArray(),
         })
     }
 }

@@ -1,4 +1,4 @@
-import { EngineService } from '..'
+import type { EngineService } from '..'
 
 export class MovementSystem {
     private engine: EngineService
@@ -45,14 +45,9 @@ export class MovementSystem {
 
         player.position.x += dx
         player.position.z += dz
-        player.mesh.position.set(
-            player.position.x,
-            player.mesh.position.y,
-            player.position.z
-        )
 
         if (inputs.movementX) {
-            player.mesh.rotation.y -= inputs.movementX * 0.005
+            player.rotation.y -= inputs.movementX * 0.005
         }
     }
 }

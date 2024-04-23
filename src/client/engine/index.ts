@@ -8,6 +8,7 @@ import {
     MovementSystem,
     CameraSystem,
     RenderSystem,
+    MeshSystem,
 } from './systems'
 import type { PlayerEntity } from './entities'
 
@@ -28,6 +29,7 @@ export class EngineService {
     public cameraSystem: CameraSystem
     public controlSystem: ControlSystem
     public movementSystem: MovementSystem
+    public meshSystem: MeshSystem
     public players: PlayerEntity[] = []
     public tickManager: number = 0
 
@@ -40,6 +42,7 @@ export class EngineService {
         this.multiplayerSystem = new MultiplayerSystem(this)
         this.controlSystem = new ControlSystem(this)
         this.movementSystem = new MovementSystem(this)
+        this.meshSystem = new MeshSystem(this)
         // this.vrmSystem = new VRMSystem(this)
         this.init()
         this.initStats()
@@ -81,6 +84,7 @@ export class EngineService {
         // this.vrmSystem.update(delta)
         this.controlSystem.update()
         this.movementSystem.update(delta)
+        this.meshSystem.update()
         this.cameraSystem.update()
         this.renderSystem.update(delta)
 
