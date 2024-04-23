@@ -57,5 +57,13 @@ export class ServerService {
             })
             console.log(`Player ${id} disconnected`)
         })
+
+        socket.on(
+            EVENTS.PLAYER_UPDATE,
+            (data: EVENTS.PlayerUpdateEventPayload) => {
+                const { id, position, rotation } = data
+                console.log('Player update', id, position, rotation)
+            }
+        )
     }
 }

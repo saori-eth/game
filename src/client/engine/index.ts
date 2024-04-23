@@ -29,6 +29,7 @@ export class EngineService {
     public controlSystem: ControlSystem
     public movementSystem: MovementSystem
     public players: PlayerEntity[] = []
+    public tickManager: number = 0
 
     constructor(props: EngineProps) {
         this.scene = new THREE.Scene()
@@ -82,6 +83,14 @@ export class EngineService {
         this.movementSystem.update(delta)
         this.cameraSystem.update()
         this.renderSystem.update(delta)
+
+        this.tickManager += delta
+        // update multiplayer system every 0.1 seconds
+        if (this.tickManager >= 0.1) {
+            this.multiplayerSystem.update()
+            this.tickManager -= 0.1
+        }
+
         this.stats.end()
     }
 
