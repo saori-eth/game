@@ -2,8 +2,7 @@ import type { Vector3 } from 'three'
 
 const Y_OFFSET = 0.5
 export type PlayerPosition = [number, number, number]
-export type PlayerRotation = [number, number, number, number]
-
+export type PlayerRotation = [number, number, number, 'XYZ']
 export class Player {
     public id: string
     public position: null | PlayerPosition
