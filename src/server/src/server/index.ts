@@ -62,8 +62,13 @@ export class ServerService {
             EVENTS.PLAYER_UPDATE,
             (data: EVENTS.PlayerUpdateEventPayload) => {
                 const { id, position, rotation } = data
-                this.rooms.forEach((game, roomId) => {
-                    game.updatePlayer(id, position, rotation)
+                this.rooms.forEach((game) => {
+                    const player = game.players.find(
+                        (player: Player) => player.id === id
+                    )
+                    if (!player) return
+                    player.position = position
+                    player.rotation = rotation
                 })
             }
         )
