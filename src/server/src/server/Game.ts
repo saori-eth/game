@@ -16,7 +16,9 @@ export class Game {
     }
     getSpawn(playerId: string) {
         const player = this.players.find((player) => player.id === playerId)
-        player.setPosition(getSpawnPoint(this.gridSize))
+        const { position, rotation } = getSpawnPoint(this.gridSize)
+        player.setPosition(position)
+        player.setRotation(rotation)
     }
 
     getState() {

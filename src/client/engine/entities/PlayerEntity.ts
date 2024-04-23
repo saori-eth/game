@@ -1,4 +1,4 @@
-import { PlayerPosition } from 'shared'
+import { PlayerPosition, PlayerRotation } from 'shared'
 import * as THREE from 'three'
 
 export class PlayerEntity {
@@ -26,7 +26,7 @@ export class PlayerEntity {
         this.rotation = rot
     }
 
-    setRotationFromArray(rot: number[]) {
+    setRotationFromArray(rot: PlayerRotation) {
         this.rotation = new THREE.Euler(rot[0], rot[1], rot[2])
     }
 
