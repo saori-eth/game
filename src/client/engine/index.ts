@@ -8,6 +8,7 @@ import {
     MovementSystem,
     CameraSystem,
     RenderSystem,
+    MeshSystem,
 } from './systems'
 import type { PlayerEntity } from './entities'
 
@@ -28,7 +29,9 @@ export class EngineService {
     public cameraSystem: CameraSystem
     public controlSystem: ControlSystem
     public movementSystem: MovementSystem
+    public meshSystem: MeshSystem
     public players: PlayerEntity[] = []
+    public tickManager: number = 0
 
     constructor(props: EngineProps) {
         this.scene = new THREE.Scene()
@@ -39,6 +42,7 @@ export class EngineService {
         this.multiplayerSystem = new MultiplayerSystem(this)
         this.controlSystem = new ControlSystem(this)
         this.movementSystem = new MovementSystem(this)
+        this.meshSystem = new MeshSystem(this)
         // this.vrmSystem = new VRMSystem(this)
         this.init()
         this.initStats()
@@ -80,8 +84,17 @@ export class EngineService {
         // this.vrmSystem.update(delta)
         this.controlSystem.update()
         this.movementSystem.update(delta)
+        this.meshSystem.update()
         this.cameraSystem.update()
         this.renderSystem.update(delta)
+
+        this.tickManager += delta
+        // update multiplayer system every 0.1 seconds
+        if (this.tickManager >= 0.1) {
+            this.multiplayerSystem.update()
+            this.tickManager -= 0.1
+        }
+
         this.stats.end()
     }
 

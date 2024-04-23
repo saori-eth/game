@@ -52,9 +52,12 @@ export class MultiplayerSystem {
 
     handleInitialize(players: Player[]) {
         players.forEach((player: Player) => {
-            console.log('Position from server', player.position)
+            console.log('player joined', player.id)
             const playerEntity = new PlayerEntity(player.id)
+            if (!player.position) return console.log('no position')
             playerEntity.setPositionFromArray(player.position)
+            // TODO: this is placeholder rotation. need to generate rotation on server
+            playerEntity.setRotationFromArray([0, 0, 0])
             playerEntity.buildMesh(this.engine.scene)
             this.engine.players.push(playerEntity)
         })
@@ -69,7 +72,10 @@ export class MultiplayerSystem {
         )
         missingPlayers.forEach((player: Player) => {
             const playerEntity = new PlayerEntity(player.id)
+            if (!player.position) return console.log('no position')
             playerEntity.setPositionFromArray(player.position)
+            // TODO: this is placeholder rotation. need to generate rotation on server
+            playerEntity.setRotationFromArray([0, 0, 0])
             playerEntity.buildMesh(this.engine.scene)
             this.engine.players.push(playerEntity)
         })
@@ -92,6 +98,19 @@ export class MultiplayerSystem {
             this.engine.players = this.engine.players.filter(
                 (p: PlayerEntity) => p.id !== player.id
             )
+        })
+    }
+
+    update() {
+        if (!this.id) return
+        const player = this.engine.players.find(
+            (player: PlayerEntity) => player.id === this.id
+        )
+        if (!player || !player.position || !player.rotation) return
+        this.engine.socket.emit('player_update', {
+            id: this.id,
+            position: player.position.toArray(),
+            rotation: player.rotation.toArray(),
         })
     }
 }
