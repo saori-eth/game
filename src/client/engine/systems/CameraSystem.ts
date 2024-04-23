@@ -27,7 +27,7 @@ export class CameraSystem {
         const player = this.engine.getLocalPlayer()
         if (!player || !player.mesh || !player.position) return
 
-        const playerPos = player.position
+        const playerPos = player.mesh.position
 
         const { movementX, movementY, deltaY } =
             this.engine.controlSystem.controls
