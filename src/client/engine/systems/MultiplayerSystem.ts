@@ -47,6 +47,23 @@ export class MultiplayerSystem {
             console.log('removing players')
             this.handleMissingPlayer(state.players)
         }
+
+        // case: updating player
+        this.state.players.forEach((player: PlayerEntity) => {
+            const updatedPlayer = state.players.find(
+                (p: Player) => p.id === player.id && p.id !== this.id
+            )
+            if (!updatedPlayer) return
+            const playerEntity = this.engine.players.find(
+                (p: PlayerEntity) => p.id === player.id
+            )
+            if (!playerEntity) return
+            playerEntity.updatePlayer(
+                updatedPlayer.position,
+                updatedPlayer.rotation
+            )
+        })
+
         this.state = state
     }
 

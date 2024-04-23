@@ -1,6 +1,8 @@
 import { PlayerPosition, PlayerRotation } from 'shared'
 import * as THREE from 'three'
 
+const HEIGHT_OFFSET = 0.5
+
 export class PlayerEntity {
     id: string
     position: null | THREE.Vector3
@@ -30,6 +32,11 @@ export class PlayerEntity {
         this.rotation = new THREE.Euler(rot[0], rot[1], rot[2])
     }
 
+    updatePlayer(pos: PlayerPosition, rot: PlayerRotation) {
+        this.setPositionFromArray(pos)
+        this.setRotationFromArray(rot)
+    }
+
     buildMesh(scene: THREE.Scene) {
         if (this.position) {
             const geometry = new THREE.BoxGeometry(1, 1, 1)
@@ -57,7 +64,7 @@ export class PlayerEntity {
         if (this.mesh && this.position) {
             this.mesh.position.set(
                 this.position.x,
-                this.position.y,
+                this.position.y + HEIGHT_OFFSET,
                 this.position.z
             )
         }
