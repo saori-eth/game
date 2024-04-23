@@ -47,6 +47,23 @@ export class MultiplayerSystem {
             console.log('removing players')
             this.handleMissingPlayer(state.players)
         }
+
+        // case: updating player
+        this.state.players.forEach((player: PlayerEntity) => {
+            const updatedPlayer = state.players.find(
+                (p: Player) => p.id === player.id && p.id !== this.id
+            )
+            if (!updatedPlayer) return
+            const playerEntity = this.engine.players.find(
+                (p: PlayerEntity) => p.id === player.id
+            )
+            if (!playerEntity) return
+            playerEntity.updatePlayer(
+                updatedPlayer.position,
+                updatedPlayer.rotation
+            )
+        })
+
         this.state = state
     }
 
@@ -54,10 +71,10 @@ export class MultiplayerSystem {
         players.forEach((player: Player) => {
             console.log('player joined', player.id)
             const playerEntity = new PlayerEntity(player.id)
-            if (!player.position) return console.log('no position')
+            if (!player.position || !player.rotation)
+                return console.log('no position or rotation')
             playerEntity.setPositionFromArray(player.position)
-            // TODO: this is placeholder rotation. need to generate rotation on server
-            playerEntity.setRotationFromArray([0, 0, 0])
+            playerEntity.setRotationFromArray(player.rotation)
             playerEntity.buildMesh(this.engine.scene)
             this.engine.players.push(playerEntity)
         })
@@ -72,10 +89,10 @@ export class MultiplayerSystem {
         )
         missingPlayers.forEach((player: Player) => {
             const playerEntity = new PlayerEntity(player.id)
-            if (!player.position) return console.log('no position')
+            if (!player.position || !player.rotation)
+                return console.log('no position or rotation')
             playerEntity.setPositionFromArray(player.position)
-            // TODO: this is placeholder rotation. need to generate rotation on server
-            playerEntity.setRotationFromArray([0, 0, 0])
+            playerEntity.setRotationFromArray(player.rotation)
             playerEntity.buildMesh(this.engine.scene)
             this.engine.players.push(playerEntity)
         })

@@ -1,4 +1,4 @@
-import { Player } from 'shared' // ? wtf
+import { Player, PlayerPosition, PlayerRotation } from 'shared' // ? wtf
 import { getSpawnPoint } from '../utils'
 
 export class Game {
@@ -16,12 +16,24 @@ export class Game {
     }
     getSpawn(playerId: string) {
         const player = this.players.find((player) => player.id === playerId)
-        player.setPosition(getSpawnPoint(this.gridSize))
+        const { position, rotation } = getSpawnPoint(this.gridSize)
+        player.setPosition(position)
+        player.setRotation(rotation)
+    }
+
+    updatePlayer(
+        id: string,
+        position: PlayerPosition,
+        rotation: PlayerRotation
+    ) {
+        const player = this.players.find((player) => player.id === id)
+        if (!player) return console.log(`Player ${id} not found in room`)
+        player.setPosition(position)
+        player.setRotation(rotation)
     }
 
     getState() {
-        return {
-            players: this.players,
-        }
+        const players = this.players.map((player) => player.serialize())
+        return { players }
     }
 }
