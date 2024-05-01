@@ -7,7 +7,8 @@ export class MultiplayerSystem {
     engine: EngineService
     state: any
     id: string | undefined
-    tickRate: number | undefined
+    lastUpdate: number = 0
+    serverDelta: number = 0
     constructor(engine: EngineService) {
         this.engine = engine
         this.init()
@@ -17,16 +18,20 @@ export class MultiplayerSystem {
         this.engine.socket.on(EVENTS.CONNECTION_ESTABLISHED, (data: any) => {
             console.log('connection_established', data)
             this.id = data.id
-            this.tickRate = data.tickRate
         })
         this.engine.socket.on('game_state', (state: any) => {
             if (!state.players) return console.log('no players in state')
             // observes state changes and updates players
+            if (this.lastUpdate) {
+                this.serverDelta = Date.now() - this.lastUpdate
+            }
+            this.lastUpdate = Date.now()
             this.managePlayers(state)
         })
     }
 
     managePlayers(state: any) {
+        console.log('delta from server', this.serverDelta)
         // case: initializing new game
         if (!this.state && state.players.length > 0) {
             console.log('initializing state')
