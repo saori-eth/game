@@ -4,7 +4,7 @@ import { Player, EVENTS } from 'shared'
 export class ServerService {
     io: any
     rooms: Map<any, any> = new Map()
-    tickRate: number = 5
+    tickRate: number = 30
     updateInterval: NodeJS.Timeout | undefined = undefined
     clientMessages: any[] = []
 

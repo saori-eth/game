@@ -89,10 +89,10 @@ export class EngineService {
         this.renderSystem.update(delta)
 
         this.tickManager += delta
-        // update multiplayer system every 0.1 seconds
-        if (this.tickManager >= 0.1) {
+        // update multiplayer system 60 times per second
+        if (this.tickManager >= 0.01667) {
             this.multiplayerSystem.update()
-            this.tickManager -= 0.1
+            this.tickManager -= 0.01667
         }
 
         this.stats.end()
