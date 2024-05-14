@@ -51,6 +51,12 @@ export class PlayerEntity {
         }
     }
 
+    private eulerToQuaternion(euler: THREE.Euler): THREE.Quaternion {
+        const quaternion = new THREE.Quaternion()
+        quaternion.setFromEuler(euler)
+        return quaternion
+    }
+
     dispose() {
         if (this.mesh) {
             this.mesh.geometry.dispose()
@@ -60,20 +66,34 @@ export class PlayerEntity {
         }
     }
 
-    update() {
-        if (this.mesh && this.position) {
-            this.mesh.position.set(
-                this.position.x,
-                this.position.y + HEIGHT_OFFSET,
-                this.position.z
-            )
-        }
-        if (this.mesh && this.rotation) {
-            this.mesh.rotation.set(
-                this.rotation.x,
-                this.rotation.y,
-                this.rotation.z
-            )
+    update(delta?: number) {
+        if (this.mesh && this.position && this.rotation) {
+            if (delta) {
+                const lerpFactor = 0.1 // This controls the rate of interpolation
+
+                // Position Interpolation
+                const targetPosition = new THREE.Vector3(
+                    this.position.x,
+                    this.position.y + HEIGHT_OFFSET,
+                    this.position.z
+                )
+                this.mesh.position.lerp(targetPosition, lerpFactor)
+
+                // Rotation Interpolation
+                const targetQuaternion = this.eulerToQuaternion(this.rotation)
+                this.mesh.quaternion.slerp(targetQuaternion, lerpFactor)
+            } else {
+                this.mesh.position.set(
+                    this.position.x,
+                    this.position.y + HEIGHT_OFFSET,
+                    this.position.z
+                )
+                this.mesh.rotation.set(
+                    this.rotation.x,
+                    this.rotation.y,
+                    this.rotation.z
+                )
+            }
         }
     }
 }

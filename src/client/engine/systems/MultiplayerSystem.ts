@@ -31,7 +31,6 @@ export class MultiplayerSystem {
     }
 
     managePlayers(state: any) {
-        console.log('delta from server', this.serverDelta)
         // case: initializing new game
         if (!this.state && state.players.length > 0) {
             console.log('initializing state')
