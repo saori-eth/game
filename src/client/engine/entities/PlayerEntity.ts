@@ -67,11 +67,11 @@ export class PlayerEntity {
     }
 
     update(delta?: number) {
+        console.log('delta', delta)
         if (this.mesh && this.position && this.rotation) {
             if (delta) {
-                const lerpFactor = 0.1 // This controls the rate of interpolation
+                let lerpFactor = delta / 250
 
-                // Position Interpolation
                 const targetPosition = new THREE.Vector3(
                     this.position.x,
                     this.position.y + HEIGHT_OFFSET,
