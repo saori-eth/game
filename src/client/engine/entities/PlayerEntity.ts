@@ -67,7 +67,6 @@ export class PlayerEntity {
     }
 
     update(delta?: number) {
-        console.log('delta', delta)
         if (this.mesh && this.position && this.rotation) {
             if (delta) {
                 let lerpFactor = delta / 250
@@ -79,7 +78,6 @@ export class PlayerEntity {
                 )
                 this.mesh.position.lerp(targetPosition, lerpFactor)
 
-                // Rotation Interpolation
                 const targetQuaternion = this.eulerToQuaternion(this.rotation)
                 this.mesh.quaternion.slerp(targetQuaternion, lerpFactor)
             } else {
