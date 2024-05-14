@@ -12,6 +12,7 @@
     "dependencies": {
         "@pixiv/three-vrm": "^2.1.0",
         "@t3-oss/env-nextjs": "^0.10.1",
+        "dotenv-cli": "^7.3.0",
         "next": "14.0.4",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
