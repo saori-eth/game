@@ -7,6 +7,7 @@ export interface ControlInterface {
     s: boolean
     d: boolean
     shift: boolean
+    space: boolean
     movementX: number
     movementY: number
     deltaY: number
@@ -23,6 +24,7 @@ export class ControlSystem {
             s: false,
             d: false,
             shift: false,
+            space: false,
             movementX: 0,
             movementY: 0,
             deltaY: 0,
@@ -46,6 +48,9 @@ export class ControlSystem {
             if (e.key === 'Shift') {
                 this.controls.shift = true
             }
+            if (e.key === ' ') {
+                this.controls.space = true
+            }
         })
         window.addEventListener('keyup', (e) => {
             if (e.key === 'w' || e.key === 'W') {
@@ -62,6 +67,9 @@ export class ControlSystem {
             }
             if (e.key === 'Shift') {
                 this.controls.shift = false
+            }
+            if (e.key === ' ') {
+                this.controls.space = false
             }
         })
         this.engine.canvas.addEventListener('click', () => {
