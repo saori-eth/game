@@ -11,6 +11,7 @@
         "prettier-format": "prettier --write .",
         "prettier-check": "prettier --check ."
     },
+    "packageManager": "pnpm@9.1.3",
     "keywords": [],
     "author": "",
     "license": "ISC",
